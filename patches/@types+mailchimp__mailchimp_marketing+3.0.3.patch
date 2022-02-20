@@ -1,0 +1,99 @@
+diff --git a/node_modules/@types/mailchimp__mailchimp_marketing/index.d.ts b/node_modules/@types/mailchimp__mailchimp_marketing/index.d.ts
+index f5fe7ca..fc53fbb 100755
+--- a/node_modules/@types/mailchimp__mailchimp_marketing/index.d.ts
++++ b/node_modules/@types/mailchimp__mailchimp_marketing/index.d.ts
+@@ -58,6 +58,80 @@ export interface SetListMemberBody {
+     merge_fields?: Record<string, any> | undefined;
+ }
+ 
++export interface ListMember {
++    id: string;
++    email_address: string;
++    unique_email_id: string;
++    contact_id: string;
++    full_name: string;
++    web_id: number;
++    email_type: string;
++    status:
++      | "subscribed"
++      | "unsubscribed"
++      | "cleaned"
++      | "pending"
++      | "transactional"
++      | "archived";
++    unsubscribe_reason: string;
++    consents_to_one_to_one_messaging: boolean;
++    merge_fields: object;
++    interests: object;
++    stats: {
++      avg_open_rate: number;
++      avg_click_rate: number;
++      ecommerce_data: {
++        total_revenue: number;
++        number_of_orders: number;
++        currency_code: string;
++      };
++    };
++    ip_signup: string;
++    timestamp_signup: string;
++    ip_opt: string;
++    timestamp_opt: string;
++    member_rating: number;
++    last_changed: string;
++    language: string;
++    vip: boolean;
++    email_client: string;
++    location: {
++      latitude: number;
++      longitude: number;
++      gmtoff: number;
++      dstoff: number;
++      country_code: string;
++      timezone: string;
++    };
++    marketing_permissions: {
++      marketing_permission_id: string;
++      text: string;
++      enabled: boolean;
++    }[];
++    last_note: {
++      note_id: number;
++      created_at: string;
++      created_by: string;
++      note: string;
++    };
++    source: string;
++    tags_count: number;
++    tags: {
++      id: number;
++      name: string;
++    }[];
++    list_id: string;
++    _links: [
++      {
++        rel: string;
++        href: string;
++        method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "OPTIONS" | "HEAD";
++        targetSchema: string;
++        schema: string;
++      }
++    ];
++  }
++
+ /*~ If there are types, properties, or methods inside dotted names
+  *~ of the module, declare them inside a 'namespace'.
+  */
+@@ -74,11 +148,11 @@ export namespace lists {
+         subscriberHash: string,
+         body: SetListMemberBody,
+         opts?: Options,
+-    ): Promise<void>;
++    ): Promise<ListMember>;
+ 
+     function getListMember(listId: string, subscriberHash: string, opts?: Options): Promise<void>;
+ 
+-    function addListMember(listId: string, body: AddListMemberBody, opts?: Options): Promise<void>;
++    function addListMember(listId: string, body: AddListMemberBody, opts?: Options): Promise<ListMember>;
+ 
+     function updateListMember(
+         listId: string,
